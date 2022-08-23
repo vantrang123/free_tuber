@@ -17,4 +17,10 @@ class Strings {
   ];
 
   static String apikey = listApikey.elementAt(Random().nextInt(listApikey.length));
+
+  static const String categoryCodeMusic = '10';
+  static const String categoryCodeGame = '20';
+  static const String categoryCodeEntertainment = '24';
+  static const String categoryCodeSport = '17';
+  static const String none = 'none';
 }

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-enum HomeScreenTab { Music, Entertainment, Movies, WatchLater }
+enum HomeScreenTab { All, Music, Entertainment, Sport, Game }
 
 class HomeTabProvider extends ChangeNotifier {
   late HomeScreenTab _currentHomeTab;

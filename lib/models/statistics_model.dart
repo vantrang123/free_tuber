@@ -21,6 +21,15 @@ class StatisticsModel {
         commentCount: item['statistics']['commentCount']);
   }
 
+  factory StatisticsModel.fromMap(Map<String, dynamic> item) {
+    return StatisticsModel(
+        viewCount: item['viewCount'],
+        likeCount: item['likeCount'],
+        dislikeCount: item['dislikeCount'],
+        favoriteCount: item['favoriteCount'],
+        commentCount: item['commentCount']);
+  }
+
   Map<String, dynamic> toMap() => {
         "viewCount": viewCount,
         "likeCount": likeCount,

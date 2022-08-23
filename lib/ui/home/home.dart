@@ -12,6 +12,7 @@ import '../../provider/home_tab.dart';
 import '../../utils/routes/routes.dart';
 import '../../widgets/collapsed_panel.dart';
 import '../../widgets/search_bar_logo.dart';
+import 'page/home_page_all.dart';
 import 'page/home_page_another.dart';
 import 'page/home_page_entertainment.dart';
 import 'page/home_page_movies.dart';
@@ -29,17 +30,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     HomeTabProvider tabProvider = Provider.of<HomeTabProvider>(context, listen: false);
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
       int tabIndex = _tabController.index;
       if (tabIndex == 0) {
-        tabProvider.currentHomeTab = HomeScreenTab.Music;
+        tabProvider.currentHomeTab = HomeScreenTab.All;
       } else if (tabIndex == 1) {
-        tabProvider.currentHomeTab = HomeScreenTab.Entertainment;
+        tabProvider.currentHomeTab = HomeScreenTab.Music;
       } else if (tabIndex == 2) {
-        tabProvider.currentHomeTab = HomeScreenTab.WatchLater;
+        tabProvider.currentHomeTab = HomeScreenTab.Entertainment;
       } else if (tabIndex == 3) {
-        tabProvider.currentHomeTab = HomeScreenTab.WatchLater;
+        tabProvider.currentHomeTab = HomeScreenTab.Sport;
+      } else if (tabIndex == 4) {
+        tabProvider.currentHomeTab = HomeScreenTab.Game;
       }
     });
 
@@ -117,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Expanded(child: TabBarView(
               controller: _tabController,
               children: [
+                HomePageAll(),
                 HomePageMusic(),
                 HomePageEntertainment(),
                 HomePageSports(),
@@ -181,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     tabPosition: TabPosition.bottom,
                     color: AppColors.accentColor[500]!),
                 tabs: [
+                  Tab(text: "All"),
                   Tab(text: "Music"),
                   Tab(text: "Entertainment"),
                   Tab(text: "Sports"),

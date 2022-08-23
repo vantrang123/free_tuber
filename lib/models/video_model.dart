@@ -47,6 +47,8 @@ class Video {
         channelTitle: item['snippet']['channelTitle'],
         publishedAt: item['snippet']['publishedAt'],
         channelId: item['snippet']['channelId'],
+        contentDetailsModel: ContentDetailsModel.fromMap(item['contentDetails']),
+        statisticsModel: StatisticsModel.fromMap(item['statistics']),
         uploaderUrl: "",
         uploaderName: "");
   }

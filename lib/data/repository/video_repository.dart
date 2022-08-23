@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:free_tuber/constants/strings.dart';
+
 import '../../models/content_details_model.dart';
 import '../../models/statistics_model.dart';
 import '../../models/video_list.dart';
@@ -28,7 +30,19 @@ class VideoRepository {
     // else make a network call to get all posts, store them into database for
     // later use
     return await _videoApi
-        .getVideosTrending(isRefresh, "24")
+        .getVideosTrendingAll(isRefresh)
+        .then((videosTrendingList) {
+      return videosTrendingList;
+    }).catchError((error) => throw error);
+  }
+
+  // Get: ---------------------------------------------------------------------
+  Future<VideoList> getVideosTrendingEntertainment(bool isRefresh) async {
+    // check to see if posts are present in database, then fetch from database
+    // else make a network call to get all posts, store them into database for
+    // later use
+    return await _videoApi
+        .getVideosTrending(isRefresh, Strings.categoryCodeEntertainment)
         .then((videosTrendingList) {
       return videosTrendingList;
     }).catchError((error) => throw error);
@@ -40,7 +54,7 @@ class VideoRepository {
     // else make a network call to get all posts, store them into database for
     // later use
     return await _videoApi
-        .getVideosTrending(isRefresh, "10")
+        .getVideosTrending(isRefresh, Strings.categoryCodeMusic)
         .then((videosTrendingList) {
       return videosTrendingList;
     }).catchError((error) => throw error);
@@ -52,7 +66,7 @@ class VideoRepository {
     // else make a network call to get all posts, store them into database for
     // later use
     return await _videoApi
-        .getVideosTrending(isRefresh, "17")
+        .getVideosTrending(isRefresh, Strings.categoryCodeSport)
         .then((videosTrendingList) {
       return videosTrendingList;
     }).catchError((error) => throw error);
@@ -64,7 +78,7 @@ class VideoRepository {
     // else make a network call to get all posts, store them into database for
     // later use
     return await _videoApi
-        .getVideosTrending(isRefresh, "20")
+        .getVideosTrending(isRefresh, Strings.categoryCodeGame)
         .then((videosTrendingList) {
       return videosTrendingList;
     }).catchError((error) => throw error);

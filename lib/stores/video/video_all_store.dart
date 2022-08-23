@@ -5,11 +5,11 @@ import '../../models/video_list.dart';
 import '../../utils/dio/dio_error_util.dart';
 import '../error/error_store.dart';
 
-part 'video_entertainment_store.g.dart';
+part 'video_all_store.g.dart';
 
-class VideoEntertainmentStore = _VideoEntertainmentStore with _$VideoEntertainmentStore;
+class VideoAllStore = _VideoAllStore with _$VideoAllStore;
 
-abstract class _VideoEntertainmentStore with Store {
+abstract class _VideoAllStore with Store {
   // repository instance
   late VideoRepository _repository;
 
@@ -17,15 +17,15 @@ abstract class _VideoEntertainmentStore with Store {
   final ErrorStore errorStore = ErrorStore();
 
   // constructor:---------------------------------------------------------------
-  _VideoEntertainmentStore(VideoRepository repository) : this._repository = repository;
+  _VideoAllStore(VideoRepository repository) : this._repository = repository;
 
   // store variables:-----------------------------------------------------------
   static ObservableFuture<VideoList?> emptyVideoResponse =
-      ObservableFuture.value(null);
+  ObservableFuture.value(null);
 
   @observable
   ObservableFuture<VideoList?> fetchVideosFuture =
-      ObservableFuture<VideoList?>(emptyVideoResponse);
+  ObservableFuture<VideoList?>(emptyVideoResponse);
 
   @observable
   VideoList? videoList;
@@ -38,8 +38,8 @@ abstract class _VideoEntertainmentStore with Store {
 
   // actions:-------------------------------------------------------------------
   @action
-  Future getVideosTrending(bool isRefresh) async {
-    final future = _repository.getVideosTrendingEntertainment(isRefresh);
+  Future getVideosTrendingAll(bool isRefresh) async {
+    final future = _repository.getVideosTrending(isRefresh);
     fetchVideosFuture = ObservableFuture(future);
 
     future.then((videoList) {

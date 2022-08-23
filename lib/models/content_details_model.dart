@@ -21,6 +21,15 @@ class ContentDetailsModel {
         licensedContent: item['contentDetails']['licensedContent']);
   }
 
+  factory ContentDetailsModel.fromMap(Map<String, dynamic> item) {
+    return ContentDetailsModel(
+        duration: item['duration'],
+        dimension: item['dimension'],
+        definition: item['definition'],
+        caption: item['caption'],
+        licensedContent: item['licensedContent']);
+  }
+
   Map<String, dynamic> toMap() => {
         "duration": duration,
         "dimension": dimension,

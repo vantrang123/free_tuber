@@ -1,4 +1,3 @@
-
 import '../../../../constants/strings.dart';
 import '../../../../models/content_details_model.dart';
 import '../../../../models/statistics_model.dart';
@@ -13,31 +12,105 @@ class VideoApi {
 
   VideoApi(this._dioClient);
 
-  String nextPageTrending = '';
+  String nextPageTrendingMusic = '';
+  String nextPageTrendingSport = '';
+  String nextPageTrendingEntertainment = '';
+  String nextPageTrendingGame = '';
+  String nextPageAll = '';
   String nextPageVideos = '';
 
   /// Returns list of trending in response
   Future<VideoList> getVideosTrending(bool isRefresh, String categoryId) async {
+    String nextPageToken = '';
     if (isRefresh == true) {
-      nextPageTrending = '';
+      nextPageToken = '';
+    } else {
+      switch (categoryId) {
+        case Strings.categoryCodeMusic:
+          nextPageToken = nextPageTrendingMusic;
+          break;
+        case Strings.categoryCodeSport:
+          nextPageToken = nextPageTrendingSport;
+          break;
+        case Strings.categoryCodeEntertainment:
+          nextPageToken = nextPageTrendingEntertainment;
+          break;
+        case Strings.categoryCodeGame:
+          nextPageToken = nextPageTrendingGame;
+          break;
+      }
     }
-    try {
-      Map<String, String> parameters = {
-        'part': 'snippet',
-        'maxResults': '10',
-        'chart': 'mostPopular',
-        'videoCategoryId': categoryId,
-        'pageToken': nextPageTrending,
-        'key': Strings.apikey,
-        'regionCode': "VN",
-      };
-      final res = await _dioClient.get(Endpoints.getVideosTrending,
-          queryParameters: parameters);
-      nextPageTrending = res['nextPageToken'] ?? '';
-      return VideoList.fromJson(res['items']);
-    } catch (e) {
-      print(e.toString());
-      throw e;
+
+    if (nextPageToken != Strings.none) {
+      try {
+        Map<String, String> parameters = {
+          'part': 'snippet,contentDetails,statistics',
+          'maxResults': '10',
+          'chart': 'mostPopular',
+          'videoCategoryId': categoryId,
+          'pageToken': nextPageToken,
+          'key': Strings.apikey,
+          'regionCode': "VN",
+        };
+
+        final res = await _dioClient.get(Endpoints.getVideosTrending,
+            queryParameters: parameters);
+
+        nextPageToken = res['nextPageToken'] ?? Strings.none;
+
+        switch (categoryId) {
+          case Strings.categoryCodeMusic:
+            nextPageTrendingMusic = nextPageToken;
+            break;
+          case Strings.categoryCodeSport:
+            nextPageTrendingSport = nextPageToken;
+            break;
+          case Strings.categoryCodeEntertainment:
+            nextPageTrendingEntertainment = nextPageToken;
+            break;
+          case Strings.categoryCodeGame:
+            nextPageTrendingGame = nextPageToken;
+            break;
+        }
+
+        return VideoList.fromJson(res['items']);
+      } catch (e) {
+        print(e.toString());
+        throw e;
+      }
+    } else {
+      return VideoList();
+    }
+  }
+
+  /// Returns list of trending in response
+  Future<VideoList> getVideosTrendingAll(bool isRefresh) async {
+    if (isRefresh == true) {
+      nextPageAll = '';
+    }
+    if (nextPageAll != Strings.none) {
+      try {
+        Map<String, String> parameters = {
+          'part': 'snippet,contentDetails,statistics',
+          'maxResults': '10',
+          'chart': 'mostPopular',
+          'pageToken': nextPageAll,
+          'key': Strings.apikey,
+          'regionCode': "VN",
+        };
+
+        final res = await _dioClient.get(Endpoints.getVideosTrending,
+            queryParameters: parameters);
+
+        nextPageAll = res['nextPageToken'] ?? Strings.none;
+
+        return VideoList.fromJson(res['items']);
+      } catch (e) {
+        print(e.toString());
+        throw e;
+      }
+    } else {
+      return VideoList();
     }
   }
 
@@ -100,7 +173,8 @@ class VideoApi {
   }
 
   /// Returns list of videos in response
-  Future<VideoListSearch> getVideosRelated(String videoId, bool isRefresh) async {
+  Future<VideoListSearch> getVideosRelated(
+      String videoId, bool isRefresh) async {
     if (isRefresh == true) {
       nextPageVideos = '';
     }

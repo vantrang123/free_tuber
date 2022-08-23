@@ -17,6 +17,7 @@ import '../stores/player/player_store.dart';
 import '../stores/video/channel_statistics_store.dart';
 import '../stores/video/channel_store.dart';
 import '../stores/video/related_2_video_store.dart';
+import '../stores/video/video_all_store.dart';
 import '../stores/video/video_another_store.dart';
 import '../stores/video/video_music_store.dart';
 import '../stores/video/video_sports_store.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
   final ExploreStore _exploreStore = ExploreStore();
   final PlayerStore _playerStore = PlayerStore();
   final VideoMusicStore _musicStore = VideoMusicStore(getIt<VideoRepository>());
+  final VideoAllStore _allStore = VideoAllStore(getIt<VideoRepository>());
   final VideoSportsStore _moviesStore =
       VideoSportsStore(getIt<VideoRepository>());
   final VideoAnotherStore _anotherStore =
@@ -49,6 +51,7 @@ class MyApp extends StatelessWidget {
         Provider<ExploreStore>(create: (_) => _exploreStore),
         Provider<PlayerStore>(create: (_) => _playerStore),
         Provider<VideoMusicStore>(create: (_) => _musicStore),
+        Provider<VideoAllStore>(create: (_) => _allStore),
         Provider<VideoSportsStore>(create: (_) => _moviesStore),
         Provider<VideoAnotherStore>(create: (_) => _anotherStore),
         Provider<Related2VideoStore>(create: (_) => _related2videoStore),

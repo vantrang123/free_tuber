@@ -29,10 +29,9 @@ abstract class _ExploreStore with Store {
   // actions:-------------------------------------------------------------------
   @action
   Future getVideoStreamUrl(String videoId) async {
-    var yt = exploreYT.YoutubeExplode();
-    var id = exploreYT.VideoId(videoId);
-    var manifest = await yt.videos.streamsClient.getManifest(id);
-    var streamInfo = manifest.video;
+    final yt = exploreYT.YoutubeExplode();
+    final manifest = await yt.videos.streamsClient.getManifest(videoId);
+    final streamInfo = manifest.video;
     print("Day la link video: ${streamInfo[2].url.toString()}");
     this.videoStreamUrl = streamInfo[2].url.toString();
     this.audioStreamUrl = manifest.audio[1].url.toString();

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import '../../../stores/video/video_all_store.dart';
 import '../../../stores/video/video_music_store.dart';
 import '../../../utils/error.dart';
 import '../../components/streams_large_thumbnail.dart';
 
-class HomePageMusic extends StatelessWidget {
+class HomePageAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -14,11 +15,11 @@ class HomePageMusic extends StatelessWidget {
   }
 
   Widget _buildTrendingContent(BuildContext context) {
-    final VideoMusicStore _musicStore =
-        Provider.of<VideoMusicStore>(context, listen: false);
+    final VideoAllStore _musicStore =
+        Provider.of<VideoAllStore>(context, listen: false);
     if (!_musicStore.loading && _musicStore.videoList == null ||
         _musicStore.videoList?.videos?.isEmpty == true) {
-      _musicStore.getVideosMusic(true);
+      _musicStore.getVideosTrendingAll(true);
     }
     return Observer(builder: (context) {
       return Material(
@@ -26,7 +27,7 @@ class HomePageMusic extends StatelessWidget {
         infoItems: _musicStore.videoList?.videos ?? [],
         onReachingListEnd: () {
           if (!_musicStore.loading)
-            _musicStore.getVideosMusic(false);
+            _musicStore.getVideosTrendingAll(false);
         },
       ));
     });
